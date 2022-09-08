@@ -22,6 +22,8 @@ public class MovieListViewModel extends ViewModel {
     private MutableLiveData<List<Result>> listMovie;
     private MutableLiveData<List<Result>> listMovieTrend;
     private MutableLiveData<List<Result>> listMovieSearch;
+    public String queryMovie;
+    public int page = 1;
 
     public MovieListViewModel(){
         listMovie = new MutableLiveData<>();
@@ -41,14 +43,20 @@ public class MovieListViewModel extends ViewModel {
         return listMovieSearch;
     }
 
-    public void responseListMoviePopular(){
-        Call<MovieResponse> call = movieApi.popularMovie(Credentials.API_KEY, 1);
+    public void responseListMoviePopular(int pageNumber){
+        Call<MovieResponse> call = movieApi.popularMovie(Credentials.API_KEY, pageNumber);
         call.enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 if(response.isSuccessful()){
                     List<Result> results = response.body().getResults();
-                    listMovie.postValue(results);
+                    if(pageNumber == 1){
+                        listMovie.postValue(results);
+                    }else {
+                        List<Result> resultsCurrent = listMovie.getValue();
+                        resultsCurrent.addAll(results);
+                        listMovie.postValue(resultsCurrent);
+                    }
                 }else {
                     Log.v("MoviePopular", response.code() + " " + response.message());
                 }
@@ -62,16 +70,22 @@ public class MovieListViewModel extends ViewModel {
         });
     }
 
-    public void responseListMovieTrend(){
-        Call<MovieResponse> call = movieApi.trendingMovie(Credentials.API_KEY, 1);
+    public void responseListMovieTrend(int pageNumber){
+        Call<MovieResponse> call = movieApi.trendingMovie(Credentials.API_KEY, pageNumber);
         call.enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                List<Result> results = response.body().getResults();
                 if(response.isSuccessful()){
-                    List<Result> results = response.body().getResults();
-                    listMovieTrend.postValue(results);
+                    if(pageNumber == 1){
+                        listMovieTrend.postValue(results);
+                    } else {
+                        List<Result> resultsCurrent = listMovieTrend.getValue();
+                        resultsCurrent.addAll(results);
+                        listMovieTrend.postValue(resultsCurrent);
+                    }
                 }else {
-                    Log.v("MoviePopular", response.code() + " " + response.message());
+                    Log.v("MovieTrend", response.code() + " " + response.message());
                 }
             }
 
@@ -83,14 +97,21 @@ public class MovieListViewModel extends ViewModel {
         });
     }
 
-    public void responseListMovieSearch(String query, int page){
-        Call<MovieResponse> call = movieApi.searchMovieByName(Credentials.API_KEY, query, page);
+    public void responseListMovieSearch(String query, int pageNumber){
+        queryMovie = query;
+        Call<MovieResponse> call = movieApi.searchMovieByName(Credentials.API_KEY, query, pageNumber);
         call.enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 if(response.isSuccessful()){
                     List<Result> results = response.body().getResults();
-                    listMovieSearch.postValue(results);
+                    if(pageNumber == 1){
+                        listMovieSearch.postValue(results);
+                    } else {
+                        List<Result> resultsCurrent = listMovieSearch.getValue();
+                        resultsCurrent.addAll(results);
+                        listMovieSearch.postValue(resultsCurrent);
+                    }
                 }else {
                     Log.v("MovieSearch", response.code() + " " + response.message());
                 }
@@ -104,4 +125,15 @@ public class MovieListViewModel extends ViewModel {
         });
     }
 
+    public void searchNextPage(){
+        responseListMovieSearch(queryMovie, page++);
+    }
+
+    public void movieTrendNextPage(){
+        responseListMovieTrend(page++);
+    }
+
+    public void moviePopularNextPage(){
+        responseListMoviePopular(page++);
+    }
 }

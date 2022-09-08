@@ -1,5 +1,6 @@
 package com.example.projectdemosmac;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Observer;
@@ -52,6 +53,15 @@ public class MovieSearchActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.rcv_listMovieSearch);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                if(recyclerView.canScrollVertically(1)){
+                    movieListViewModel.searchNextPage();
+                }
+            }
+        });
 
         tvSearch.setText(query.toString());
         movieSearchListAdapter = new MovieSearchListAdapter(listMovieSearch, this);

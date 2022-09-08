@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Observer;
@@ -60,6 +61,24 @@ public class ListMovieActivity extends AppCompatActivity {
 //        searchMovieApi();
         movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
 
+        rcvListMovieTrend.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                if(!recyclerView.canScrollHorizontally(1)){
+                    movieListViewModel.movieTrendNextPage();
+                }
+            }
+        });
+
+        rcvListMovie.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                if(!recyclerView.canScrollVertically(1)){
+                    movieListViewModel.moviePopularNextPage();
+                }
+            }
+        });
+
         movieListViewModel.getMoviePopularList().observe(this, new Observer<List<Result>>() {
             @Override
             public void onChanged(List<Result> results) {
@@ -72,7 +91,7 @@ public class ListMovieActivity extends AppCompatActivity {
                 }
             }
         });
-        movieListViewModel.responseListMoviePopular();
+        movieListViewModel.responseListMoviePopular(1);
         rcvListMovie.setAdapter(movieListAdapter);
 
         movieListViewModel.getMovieTrendList().observe(this, new Observer<List<Result>>() {
@@ -90,9 +109,8 @@ public class ListMovieActivity extends AppCompatActivity {
                 }
             }
         });
-        movieListViewModel.responseListMovieTrend();
+        movieListViewModel.responseListMovieTrend(1);
         rcvListMovieTrend.setAdapter(movieTrendListAdapter);
-
     }
 
     private void setUpSearchView() {
