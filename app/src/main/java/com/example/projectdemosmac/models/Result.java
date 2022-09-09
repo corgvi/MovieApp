@@ -1,5 +1,12 @@
 package com.example.projectdemosmac.models;
 
+import android.widget.ImageView;
+import android.widget.RatingBar;
+
+import androidx.databinding.BindingAdapter;
+
+import com.bumptech.glide.Glide;
+import com.example.projectdemosmac.R;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -79,7 +86,7 @@ public class Result implements Serializable {
     private Boolean video;
     @SerializedName("vote_average")
     @Expose
-    private Double voteAverage;
+    private Float voteAverage;
     @SerializedName("vote_count")
     @Expose
     private Integer voteCount;
@@ -268,11 +275,11 @@ public class Result implements Serializable {
         this.video = video;
     }
 
-    public Double getVoteAverage() {
-        return voteAverage;
+    public Float getVoteAverage() {
+        return (voteAverage+1)/2;
     }
 
-    public void setVoteAverage(Double voteAverage) {
+    public void setVoteAverage(Float voteAverage) {
         this.voteAverage = voteAverage;
     }
 
@@ -284,4 +291,22 @@ public class Result implements Serializable {
         this.voteCount = voteCount;
     }
 
+    @BindingAdapter("loadImage")
+    public static void loadImage(ImageView imageView, String url){
+        if(imageView == null){
+            return;
+        }
+        Glide.with(imageView.getContext())
+                .load("https://image.tmdb.org/t/p/w500" + url)
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .into(imageView);
+    }
+
+    @BindingAdapter("rating")
+    public static void rating(RatingBar ratingBar, float rating) {
+        if (ratingBar == null) {
+            return;
+        }
+        ratingBar.setRating(rating);
+    }
 }

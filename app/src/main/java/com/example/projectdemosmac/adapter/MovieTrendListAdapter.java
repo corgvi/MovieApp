@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.projectdemosmac.DetailActivity;
 import com.example.projectdemosmac.R;
+import com.example.projectdemosmac.databinding.ItemMovieTrendBinding;
 import com.example.projectdemosmac.models.Result;
 
 import java.util.List;
@@ -39,34 +40,16 @@ public class MovieTrendListAdapter extends RecyclerView.Adapter<MovieTrendListAd
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie_trend, parent, false);
-        return new MovieViewHolder(view);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        ItemMovieTrendBinding binding = ItemMovieTrendBinding.inflate(inflater, parent, false);
+        return new MovieViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
 
         Result result = listMovie.get(position);
-        holder.tvTitle.setText(result.getTitle());
-        Glide.with(holder.itemView.getContext()).load("https://image.tmdb.org/t/p/w500" + result.
-                getPosterPath()).into(holder.imgMovie);
-        holder.ratingMovie.setRating(Float.parseFloat(String.valueOf(result.getVoteAverage()/2)));
-        
-        holder.tvTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "Click title", Toast.LENGTH_SHORT).show();
-                moveToDetailsMovie(context, result);
-            }
-        });
-        
-        holder.imgMovie.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "Click img", Toast.LENGTH_SHORT).show();
-                moveToDetailsMovie(context, result);
-            }
-        });
+        holder.binding.setResult(result);
     }
 
     @Override
@@ -78,14 +61,24 @@ public class MovieTrendListAdapter extends RecyclerView.Adapter<MovieTrendListAd
     }
 
     class MovieViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvTitle;
-        private ImageView imgMovie;
-        private RatingBar ratingMovie;
-        public MovieViewHolder(@NonNull View itemView) {
-            super(itemView);
-            tvTitle = itemView.findViewById(R.id.tv_title);
-            imgMovie = itemView.findViewById(R.id.img_movie);
-            ratingMovie = itemView.findViewById(R.id.rating_movie);
+        ItemMovieTrendBinding binding;
+        public MovieViewHolder(@NonNull ItemMovieTrendBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+            binding.imgMovie.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Result result = listMovie.get(getAdapterPosition());
+                    moveToDetailsMovie(context, result);
+                }
+            });
+            binding.tvTitle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Result result = listMovie.get(getAdapterPosition());
+                    moveToDetailsMovie(context, result);
+                }
+            });
         }
     }
 

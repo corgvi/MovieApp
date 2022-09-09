@@ -102,7 +102,7 @@ public class ListMovieActivity extends AppCompatActivity {
                     Log.d("TAG", "onChanged: " + results.size());
                     movieTrendListAdapter.setMovieList(results);
                     for(Result result : listMovieTrend){
-                        Log.d("TAG", "MovieTrend: " + result.getOriginalTitle());
+                        Log.d("TAG", "MovieTrend: " + result.getOriginalTitle() + " - " + result.getVoteAverage());
                     }
                 }else {
                     Toast.makeText(ListMovieActivity.this, "Failed to get list of movies", Toast.LENGTH_SHORT).show();
@@ -132,5 +132,4 @@ public class ListMovieActivity extends AppCompatActivity {
             }
         });
     }
-
 }
