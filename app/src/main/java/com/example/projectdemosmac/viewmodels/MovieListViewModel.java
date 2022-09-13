@@ -50,6 +50,7 @@ public class MovieListViewModel extends ViewModel {
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 if(response.isSuccessful()){
                     List<Result> results = response.body().getResults();
+                    Log.d("TAG", "onResponse: " + results.size());
                     if(pageNumber == 1){
                         listMovie.postValue(results);
                     }else {

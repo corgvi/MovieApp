@@ -17,6 +17,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".UpdateFavoriteMovieActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FavoriteMovieActivity"
+            android:exported="false" />
+        <activity
             android:name=".MovieSearchActivity"
             android:exported="false" />
         <activity

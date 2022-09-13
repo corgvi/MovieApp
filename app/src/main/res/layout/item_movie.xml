@@ -5,9 +5,7 @@
         <variable
             name="result"
             type="com.example.projectdemosmac.models.Result" />
-        <variable
-            name="clickDetail"
-            type="com.example.projectdemosmac.adapter.MoviePopularListAdapter" />
+
     </data>
 
     <LinearLayout

@@ -3,6 +3,7 @@ package com.example.projectdemosmac;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,6 +13,8 @@ import android.content.Intent;
 import android.graphics.Movie;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +51,16 @@ public class MovieSearchActivity extends AppCompatActivity {
         query = getIntent().getStringExtra("query");
         movieApi = movieService.getMovieApi();
 //        searchMovieApi();
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ImageView imageFavorites = findViewById(R.id.img_favorite);
+        imageFavorites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MovieSearchActivity.this, FavoriteMovieActivity.class);
+                startActivity(intent);
+            }
+        });
         tvSearch = findViewById(R.id.tv_search);
         recyclerView = (RecyclerView) findViewById(R.id.rcv_listMovieSearch);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);

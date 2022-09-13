@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -39,13 +41,23 @@ public class ListMovieActivity extends AppCompatActivity {
     private MovieTrendListAdapter movieTrendListAdapter;
     private MoviePopularListAdapter movieListAdapter;
     private List<Result> listMovie;
-    private List<Result> listMovieTrend;
+    private List<Result> listMovieTrend;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_movie);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ImageView imageFavorites = findViewById(R.id.img_favorite);
+        imageFavorites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ListMovieActivity.this, FavoriteMovieActivity.class);
+                startActivity(intent);
+            }
+        });
         rcvListMovie = findViewById(R.id.rcv_listMoviePopular);
         rcvListMovieTrend = findViewById(R.id.rcv_listMovieTrending);
         LinearLayoutManager linearLayout = new LinearLayoutManager(ListMovieActivity.this, RecyclerView.HORIZONTAL, false);

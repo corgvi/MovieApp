@@ -87,8 +87,4 @@ public class MoviePopularListAdapter extends RecyclerView.Adapter<MoviePopularLi
         context.startActivity(intent);
     }
 
-    public MoviePopularListAdapter onclickToDetail(){
-        Toast.makeText(context, "Click to Detail", Toast.LENGTH_SHORT).show();
-        return null;
-    }
 }
