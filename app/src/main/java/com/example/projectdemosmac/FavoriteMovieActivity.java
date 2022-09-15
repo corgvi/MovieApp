@@ -54,7 +54,7 @@ public class FavoriteMovieActivity extends AppCompatActivity {
             public void deleteMovie(FavoriteMovie movie) {
                 mDeleteMovie(movie);
             }
-        });
+        }, this);
 
         recyclerView = (RecyclerView) findViewById(R.id.rcv_favoriteMovie);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);

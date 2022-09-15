@@ -35,8 +35,9 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
         void deleteMovie(FavoriteMovie movie);
     }
 
-    public FavoriteMovieAdapter(IClickItemMovie iClickItemMovie) {
+    public FavoriteMovieAdapter(IClickItemMovie iClickItemMovie, Context context) {
         this.iClickItemMovie = iClickItemMovie;
+        this.context = context;
     }
 
 

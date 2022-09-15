@@ -9,42 +9,47 @@
             type="com.example.projectdemosmac.models.FavoriteMovie" />
     </data>
 
-    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".UpdateFavoriteMovieActivity">
+        android:layout_height="match_parent">
 
-        <ImageView
+        <LinearLayout xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:scaleType="centerCrop"
-            android:loadImageFavorite="@{updateMovie.image}"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".UpdateFavoriteMovieActivity">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@{updateMovie.title}"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:enabled="false"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:loadImageFavorite="@{updateMovie.image}"
+                android:scaleType="centerCrop" />
 
-        <EditText
-            android:id="@+id/ed_note"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@{updateMovie.note}"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:enabled="false"
+                android:text="@{updateMovie.title}"
+                android:textSize="26sp"
+                android:textStyle="bold" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Update"
-            android:id="@+id/btn_update"
-            android:layout_marginTop="16dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginHorizontal="16dp"/>
-    </LinearLayout>
+            <EditText
+                android:id="@+id/ed_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@{updateMovie.note}" />
+
+            <Button
+                android:id="@+id/btn_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Update"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
 </layout>

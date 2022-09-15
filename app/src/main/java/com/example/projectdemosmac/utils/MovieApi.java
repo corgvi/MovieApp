@@ -3,6 +3,7 @@ package com.example.projectdemosmac.utils;
 import com.example.projectdemosmac.models.Result;
 import com.example.projectdemosmac.response.MovieResponse;
 
+import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -12,7 +13,7 @@ public interface MovieApi {
     // Search movie by name
     //https://api.themoviedb.org/3/search/movie?api_key=9c80c58d60a64ebd960ccc7761b03455&query=Jack+Reacher&page=1
     @GET("/3/search/movie")
-    Call<MovieResponse> searchMovieByName(
+    Observable<MovieResponse> searchMovieByName(
             @Query("api_key") String api_key,
             @Query("query") String query,
             @Query("page") int page
@@ -28,7 +29,7 @@ public interface MovieApi {
     // Popular movie
     //https://api.themoviedb.org/3/movie/popular?api_key=9c80c58d60a64ebd960ccc7761b03455&page=2
     @GET("3/movie/popular")
-    Call<MovieResponse> popularMovie(
+    Observable<MovieResponse> popularMovie(
             @Query("api_key") String api_key,
             @Query("page") int page
     );
@@ -36,7 +37,7 @@ public interface MovieApi {
     // Trending movie
     //https://api.themoviedb.org/3/trending/all/week?api_key=9c80c58d60a64ebd960ccc7761b03455&page=1
     @GET("3/trending/all/week")
-    Call<MovieResponse> trendingMovie(
+    Observable<MovieResponse> trendingMovie(
             @Query("api_key") String api_key,
             @Query("page") int page
     );
